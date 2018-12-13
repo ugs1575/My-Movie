@@ -6,8 +6,8 @@
 
 
 <%
-String tempDir = application.getRealPath("/others/temp");
-String upDir = application.getRealPath("/others/storage");
+String tempDir = application.getRealPath("/movie/temp");
+String upDir = application.getRealPath("/movie/storage");
 
 UploadSave upload = new UploadSave(request, -1, -1, tempDir);
 
@@ -147,7 +147,7 @@ button:hover {
  
     <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="location.href='../home.jsp'">Home</button>
+      <button type="button" class="homebtn" onclick="location.href='movie_list.jsp'">Movie list</button>
     </div>
   </div>
 

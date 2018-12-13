@@ -1,35 +1,40 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="movie.MovieDAO"/>
-<jsp:useBean id="dto" class="movie.MovieDTO"/>
-<head>
+<jsp:useBean id="dao" class="review.ReviewDAO"/>
+<jsp:useBean id="dto" class="review.ReviewDTO"/>
+ <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <%
-	int no = Integer.parseInt(request.getParameter("no"));
-	dto = dao.read(no);
-	String col = request.getParameter("col");
-	String word = request.getParameter("word");
-	String nowPage = request.getParameter("nowPage");
-	String oldMainposter = dto.getMainPoster();
-	String oldposter = dto.getPoster();
-	
-	
+request.setCharacterEncoding("utf-8");
 
-	boolean flag = dao.delete(no);
-	String upDir = application.getRealPath("/movie/storage");
-	
-	if(flag){
-		UploadSave.deleteFile(upDir, oldMainposter);
-		UploadSave.deleteFile(upDir, oldposter);
-	}
+System.out.println(request.getParameter("rtitle"));
+System.out.println(request.getParameter("rcontent"));
+System.out.println(request.getParameter("passwd"));
+System.out.println(request.getParameter("rate"));
+System.out.println(request.getParameter("rno"));
+//form의 값 받기
+dto.setRtitle(request.getParameter("rtitle"));
+dto.setRcontent(request.getParameter("rcontent"));
+dto.setPasswd(request.getParameter("passwd"));
+dto.setRate(Integer.parseInt(request.getParameter("rate")));
+
+//hidden 값 받기
+dto.setRno(Integer.parseInt(request.getParameter("rno")));
+System.out.println("!!!!!!!!!!!!!!"+ dto.getRno());
+String col = request.getParameter("col");
+String word = request.getParameter("word");
+String nowPage = request.getParameter("nowPage");
+
+boolean flag = dao.update(dto);
 
 
-System.out.println("movie 글삭제 결과 : " +flag);
+System.out.println("review 글수정 결과 : " +flag);
 %>
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
@@ -120,20 +125,20 @@ button:hover {
 </style>
 <script type="text/javascript">
 function mlist(){
-	var url ="movie_list.jsp";
-	url = url + "?col=<%=request.getParameter("col")%>"
-	url = url + "&word=<%=request.getParameter("word")%>"
-	url = url + "&nowPage=<%=request.getParameter("nowPage")%>"
+	var url = "review_list.jsp";
+	url = url + "?col=<%=col%>"
+	url = url + "&word=<%=word%>"
+	url = url + "&nowPage=<%=nowPage%>"
 	location.href = url;
-	}
-</script>	
+}
+</script>
 <body>
 
   <div class="container" style="border:1px solid #ccc">
   <%if(flag){%>
-     <h1>Movies 게시판 새 글 삭제가 완료되었습니다. 감사합니다.</h1>
+     <h1>Reviews 게시판 새 글 수정이 완료되었습니다. 감사합니다.</h1>
      <%}else{%>
-     <h1>Movies 게시판 새 글 삭제가 실패하였습니다. 다시 한번 시도해주세요.</h1>
+     <h1>Reviews 게시판 새 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h1>
   	 <%} %>
    
     <hr>
@@ -141,7 +146,7 @@ function mlist(){
  
     <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="mlist()">Movie list</button>
+      <button type="button" class="homebtn" onclick="rlist()">Movie list</button>
     </div>
   </div>
 
@@ -153,3 +158,5 @@ function mlist(){
 
 
 <%-- <%@ include file = "../common/footer.jsp" %> --%>
+
+

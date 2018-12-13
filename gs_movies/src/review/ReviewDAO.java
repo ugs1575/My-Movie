@@ -1,4 +1,4 @@
-package movie;
+package review;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,32 +11,25 @@ import java.util.Map;
 import db.DBClose;
 import db.DBOpen;
 
-public class MovieDAO {
-	
-	public boolean create(MovieDTO dto) {
+public class ReviewDAO {
+	public boolean create(ReviewDTO dto) {
 		boolean flag = false;
 		Connection con = DBOpen.open();
 		PreparedStatement pstmt = null;
 		StringBuffer sql = new StringBuffer();
-		sql.append(" insert into movie(no, mainPoster, poster, "
-				+ "title, ryear, viewLevel, director, "
-				+ "country, content, viewer, genre) " );
-		sql.append(" values ((SELECT NVL(MAX(no), 0) + 1 as no FROM movie), "
-				+ "?, ?, ?, ?, "
-				+ "?, ?, ?, ?, ?, ?) ");
+		sql.append(" insert into review ");
+		sql.append(" (rno, rtitle, writer, rdate, rcontent, passwd, rate) ");
+		sql.append(" values((SELECT NVL(MAX(rno), 0) + 1 as rno FROM review), "); 
+		sql.append(" ?, ?, sysdate, ?, ?, ?) ");
+		
 		
 		try {
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, dto.getMainPoster());
-			pstmt.setString(2, dto.getPoster());
-			pstmt.setString(3, dto.getTitle());
-			pstmt.setString(4, dto.getRyear());
-			pstmt.setString(5, dto.getViewLevel());
-			pstmt.setString(6, dto.getDirector());
-			pstmt.setString(7, dto.getCountry());
-			pstmt.setString(8, dto.getContent());
-			pstmt.setString(9, dto.getViewer());
-			pstmt.setString(10, dto.getGenre());
+			pstmt.setString(1, dto.getRtitle());
+			pstmt.setString(2, dto.getWriter());
+			pstmt.setString(3, dto.getRcontent());
+			pstmt.setString(4, dto.getPasswd());
+			pstmt.setInt(5, dto.getRate());
 			int cnt= pstmt.executeUpdate();
 			if (cnt>0) flag=true;
 		} catch (SQLException e) {
@@ -49,8 +42,8 @@ public class MovieDAO {
 		return flag;
 	}
 	
-	public List<MovieDTO> list(Map map) {
-		List<MovieDTO> list = new ArrayList<MovieDTO>();
+	public List<ReviewDTO> list(Map map) {
+		List<ReviewDTO> list = new ArrayList<ReviewDTO>();
 		Connection con = DBOpen.open();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -62,14 +55,13 @@ public class MovieDAO {
 		
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append(" select no, poster, title, content, r");
-		sql.append(" from (select no, poster, title, content, rownum as r ");
-		sql.append(" from(select no, poster, title, content ");
-		sql.append(" from movie ");
-	
+		sql.append(" select rno, rtitle, writer, rdate, rcontent, viewcnt, r ");
+		sql.append(" from(select rno, rtitle, writer, rdate, rcontent, viewcnt, rownum as r ");
+		sql.append(" from(select rno, rtitle, writer, to_char(rdate, 'yyyy-mm-dd') as rdate, rcontent, viewcnt ");
+		sql.append(" from review ");
 		if(word.trim().length()>0)
 			sql.append(" where " +col+" like '%'||?||'%' "); 
-		sql.append(" ORDER BY no DESC)) ");
+		sql.append(" ORDER BY rno DESC)) ");
 		sql.append(" where r>=? and r<=? ");
 		
 		int i=0;
@@ -83,11 +75,13 @@ public class MovieDAO {
 			pstmt.setInt(++i, eno);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				MovieDTO dto = new MovieDTO();
-				dto.setNo(rs.getInt("no"));
-				dto.setPoster(rs.getString("poster"));
-				dto.setTitle(rs.getString("title"));
-				dto.setContent(rs.getString("content"));
+				ReviewDTO dto = new ReviewDTO();
+				dto.setRno(rs.getInt("rno"));
+				dto.setRtitle(rs.getString("rtitle"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setRdate(rs.getString("rdate"));
+				dto.setRcontent(rs.getString("rcontent"));
+				dto.setViewcnt(rs.getInt("viewcnt"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -100,31 +94,27 @@ public class MovieDAO {
 		return list;	
 	}
 
-	public MovieDTO read(int no) {
-		MovieDTO dto = null;
+	public ReviewDTO read(int no) {
+		ReviewDTO dto = null;
 		Connection con = DBOpen.open();
 		PreparedStatement pstmt = null;
 		StringBuffer sql = new StringBuffer();
 		ResultSet rs = null;
-		sql.append(" select no, mainPoster, poster, title, viewLevel, ryear, director, country, content, genre, viewer " );
-		sql.append(" from movie where no = ? ");
+		sql.append(" select rtitle, writer, rdate, rcontent, viewcnt, rate, passwd " );
+		sql.append(" from review where rno = ? ");
 		try {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, no);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
-				dto = new MovieDTO();
-				dto.setNo(rs.getInt("no"));
-				dto.setMainPoster(rs.getString("mainPoster"));
-				dto.setPoster(rs.getString("poster"));
-				dto.setTitle(rs.getString("title"));
-				dto.setViewLevel(rs.getString("viewLevel"));
-				dto.setRyear(rs.getString("ryear"));
-				dto.setDirector(rs.getString("director"));
-				dto.setCountry(rs.getString("country"));
-				dto.setContent(rs.getString("content"));
-				dto.setGenre(rs.getString("genre"));
-				dto.setViewer(rs.getString("viewer"));
+				dto = new ReviewDTO();
+				dto.setRtitle(rs.getString("rtitle"));
+				dto.setWriter(rs.getString("writer"));
+				dto.setRdate(rs.getString("rdate"));
+				dto.setRcontent(rs.getString("rcontent"));
+				dto.setPasswd(rs.getString("passwd"));
+				dto.setViewcnt(rs.getInt("viewcnt"));
+				dto.setRate(rs.getInt("rate"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -135,26 +125,20 @@ public class MovieDAO {
 		return dto;
 	}
 	
-	public boolean update(MovieDTO dto) {
+	public boolean update(ReviewDTO dto) {
 		boolean flag = false;
 		Connection con = DBOpen.open();
 		PreparedStatement pstmt = null;
 		StringBuffer sql = new StringBuffer();
-		sql.append(" update movie set title=?, ryear=?, viewLevel=?, director=?, country=?, content=?, genre=?, viewer=?, mainPoster=?, poster=?  ");
-		sql.append(" where no = ? ");
+		sql.append(" update review set rtitle=?, rcontent=?, passwd=?, rate=?  ");
+		sql.append(" where rno = ? ");
 		try {
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, dto.getTitle());
-			pstmt.setString(2, dto.getRyear());
-			pstmt.setString(3, dto.getViewLevel());
-			pstmt.setString(4, dto.getDirector());
-			pstmt.setString(5, dto.getCountry());
-			pstmt.setString(6, dto.getContent());
-			pstmt.setString(7, dto.getGenre());
-			pstmt.setString(8, dto.getViewer());
-			pstmt.setString(9, dto.getMainPoster());
-			pstmt.setString(10, dto.getPoster());
-			pstmt.setInt(11, dto.getNo());
+			pstmt.setString(1, dto.getRtitle());
+			pstmt.setString(2, dto.getRcontent());
+			pstmt.setString(3, dto.getPasswd());
+			pstmt.setInt(4, dto.getRate());
+			pstmt.setInt(5, dto.getRno());
 			
 			int cnt = pstmt.executeUpdate();
 			if(cnt>0) flag = true;
@@ -172,7 +156,7 @@ public class MovieDAO {
 		Connection con = DBOpen.open();
 		PreparedStatement pstmt = null;
 		StringBuffer sql = new StringBuffer();
-		sql.append(" delete from movie where no= ? ");
+		sql.append(" delete from review where rno= ? ");
 		try {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setInt(1, no);
@@ -198,7 +182,7 @@ public class MovieDAO {
 		String word = (String)map.get("word");
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select count(*) from movie ");
+		sql.append(" select count(*) from review ");
 		if(word.trim().length()>0)
 			sql.append(" where "+col+" like  '%'||?||'%'");
 		
@@ -224,4 +208,63 @@ public class MovieDAO {
 		return total;
 	}
 	
+	public void upViewcnt(int rno) {
+		Connection con = DBOpen.open();
+		PreparedStatement pstmt = null;
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" UPDATE review " );
+		sql.append(" SET viewcnt = viewcnt + 1 " );
+		sql.append(" WHERE rno=? " );
+		
+		try {
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, rno);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(pstmt, con);
+		}
+		
+	}
+	public boolean passCheck(Map map) {
+		boolean flag = false;
+		Connection con = DBOpen.open();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int rno = (Integer) map.get("rno");
+		String passwd = (String) map.get("passwd");
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT COUNT(rno) as cnt " );
+		sql.append(" FROM review " );
+		sql.append("WHERE rno=? AND passwd=? " );
+		
+		try {
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setInt(1, rno);
+			pstmt.setString(2, passwd);
+			
+			rs = pstmt.executeQuery();
+			rs.next();
+			int cnt = rs.getInt("cnt");
+			if (cnt>0)
+				flag = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(rs, pstmt, con);
+		}
+		
+		return flag;
+		
+	}
+	
+	
+
 }

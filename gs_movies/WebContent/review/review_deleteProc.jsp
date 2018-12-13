@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="movie.MovieDAO"/>
-<jsp:useBean id="dto" class="movie.MovieDTO"/>
+<jsp:useBean id="dao" class="review.ReviewDAO"/>
+<jsp:useBean id="dto" class="review.ReviewDTO"/>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,26 +10,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <%
-	int no = Integer.parseInt(request.getParameter("no"));
-	dto = dao.read(no);
+	int rno = Integer.parseInt(request.getParameter("rno"));
+	String passwd = request.getParameter("passwd");
 	String col = request.getParameter("col");
 	String word = request.getParameter("word");
 	String nowPage = request.getParameter("nowPage");
-	String oldMainposter = dto.getMainPoster();
-	String oldposter = dto.getPoster();
 	
 	
-
-	boolean flag = dao.delete(no);
-	String upDir = application.getRealPath("/movie/storage");
 	
-	if(flag){
-		UploadSave.deleteFile(upDir, oldMainposter);
-		UploadSave.deleteFile(upDir, oldposter);
+	Map map = new HashMap();
+	map.put("rno",rno);
+	map.put("passwd",passwd);
+	
+	boolean pflag = dao.passCheck(map);
+	boolean flag = false;
+	if(pflag){
+		flag= dao.delete(rno);
 	}
+	
 
-
-System.out.println("movie 글삭제 결과 : " +flag);
+System.out.println("review 글 삭제 결과 : " +flag);
 %>
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
@@ -49,25 +49,6 @@ System.out.println("movie 글삭제 결과 : " +flag);
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box}
 
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-}
 
 /* Set a style for all buttons */
 button {
@@ -85,42 +66,18 @@ button:hover {
     opacity:1;
 }
 
-/* Extra styles for the login button */
-.loginbtn {
-    padding: 14px 20px;
-    color: black;
-    border: 1px solid #f1f1f1;
-    background-color: #ffffff;
-}
-
-/* Float login and signup buttons and add an equal width */
-.loginbtn, .homebtn {
-  float: left;
-  width: 50%;
-}
-
+/
 /* Add padding to container elements */
 .container {
     padding: 16px;
 }
 
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-}
 
-/* Change styles for login button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .loginbtn, .homebtn {
-       width: 100%;
-    }
-}
+
 </style>
 <script type="text/javascript">
-function mlist(){
-	var url ="movie_list.jsp";
+function rlist(){
+	var url ="review_list.jsp";
 	url = url + "?col=<%=request.getParameter("col")%>"
 	url = url + "&word=<%=request.getParameter("word")%>"
 	url = url + "&nowPage=<%=request.getParameter("nowPage")%>"
@@ -129,21 +86,32 @@ function mlist(){
 </script>	
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
-  <%if(flag){%>
-     <h1>Movies 게시판 새 글 삭제가 완료되었습니다. 감사합니다.</h1>
-     <%}else{%>
-     <h1>Movies 게시판 새 글 삭제가 실패하였습니다. 다시 한번 시도해주세요.</h1>
-  	 <%} %>
-   
-    <hr>
+  <div class="content">
+<%
+	if(pflag==false){
+		out.print("패스워드 불일지");
+	} else if(flag){
+		out.print("글을 삭제했습니다.");
+	} else{
+		out.print("글삭제를 실패했습니다.");
+	}
+
+%>
+
+</div>
+<% if(pflag==false || flag==false){ %>
+  <DIV class='bottom'>
+    <input type='button' value='다시시도' onclick="history.back()">
+    <input type='button' value='목록' onclick="rlist()">
+  </DIV>
+<%}else{ %>
+<DIV class='bottom'>
+    <input type='button' value='목록' onclick="rlist()">
+</DIV>
+<%} %>
     
  
-    <div class="clearfix">
-      <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="mlist()">Movie list</button>
-    </div>
-  </div>
+    
 
 </body>
   

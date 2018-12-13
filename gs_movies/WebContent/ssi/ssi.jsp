@@ -2,6 +2,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="utility.*" %>
 <%@ page import="movie.*" %>
+<%@ page import="review.*" %>
+<%@ page import="comment.*" %>
 <%@ page import="member.*" %>
 <%@ page import="org.apache.commons.fileupload.*" %>
 <% request.setCharacterEncoding("utf-8"); %>

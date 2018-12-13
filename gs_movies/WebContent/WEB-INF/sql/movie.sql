@@ -25,10 +25,40 @@ primary key(no)
 );
 
 ALTER TABLE movie
-DROP COLUMN ryear;
+DROP COLUMN viewcnt;
+
+ALTER TABLE movie
+DROP COLUMN grpno;
+
+ALTER TABLE movie
+DROP COLUMN indent;
+
+ALTER TABLE movie
+DROP COLUMN ansnum;
 
 ALTER TABLE movie
 ADD ryear varchar(10) not null;
+
+--<list>--
+select no, mainPoster, poster, title, viewLevel, ryear, director,
+country, content, viewer, genre, r
+from(select no, mainPoster, poster, title, viewLevel, ryear, director,
+country, content, viewer, genre, rownum as r
+from(select no, mainPoster, poster, title, viewLevel, ryear, director,
+country, content, viewer, genre
+from movie
+order by no DESC))
+where r>=1 and r<=5;
+
+	
+		
+SELECT bbsno, wname, title, viewcnt, wdate, grpno, indent, ansnum, r
+from(SELECT bbsno, wname, title, viewcnt, wdate, grpno, indent, ansnum, 
+rownum as r
+from(SELECT bbsno, wname, title, viewcnt, wdate, grpno, indent, ansnum 
+FROM bbs  
+ORDER BY bbsno DESC))
+where r>=1 and r<=5;
 
 
 --<update>--
@@ -44,7 +74,7 @@ insert into movie(no, mainPoster, poster,
 title, ryear, viewLevel, genre, 
 director, country, viewer, content)
 values((SELECT NVL(MAX(no), 0) + 1 as no FROM movie), 'on_your_wedding_day_main.jpg', 'on_your_wedding_day.jpg', 
-'너의 결혼식', '2018', '12세 관람가', '멜로/로맨스',
+'왕눈이', '2018', '12세 관람가', '멜로/로맨스',
 '이석근', 'Republic of Korea', '2,820,525명', '너의결혼식 줄거리');
 
 

@@ -21,7 +21,7 @@ String grade = (String)session.getAttribute("grade"); */
     <div class="w3-right w3-hide-small">
       <a href="../home.jsp" class="w3-bar-item w3-button">Home</a>
       <a href="<%=root%>/movie/movie_list.jsp" class="w3-bar-item w3-button">Movies</a>
-      <a href="#Reviews" class="w3-bar-item w3-button">Reviews</a>
+      <a href="<%=root%>/review/review_list.jsp" class="w3-bar-item w3-button">Reviews</a>
       <a href="#Notice" class="w3-bar-item w3-button">Notice</a>
       <a href="#About" class="w3-bar-item w3-button">About</a>
       <a href="#Login" class="w3-bar-item w3-button">Login</a>
