@@ -48,6 +48,8 @@ List<CommentDTO> list = rcdao.list(map);
 
  
 int total = rcdao.total(rno);
+
+
 %>
 
 <!DOCTYPE html>
@@ -89,29 +91,33 @@ function rdel(){
 }
 
 function cupdate(rcno,rccontent){
-	alert("update실행");
 var f = document.rform;
 f.rccontent.value = rccontent;
 f.rcno.value = rcno;
 f.rsubmit.value="수정";
-f.action="./comment_update.jsp" 
+f.action="./comment_update.jsp"
 }
 	
-<%-- function cdelete(rcno){
-if(confirm("정말삭제 하겠습니까?")){ 
+function cdelete(rcno,col,word){
+
+	if(confirm("정말삭제 하겠습니까?")){ 
+	
 var url = "./comment_delete.jsp";
 url = url + "?rcno="+rcno;
 url = url + "&rno="+<%=rno%>;
 url = url + "&nowPage="+<%=nowPage%>;
+url = url + "&col="+col;
+url = url + "&word="+word;
 url = url + "&nPage="+<%=nPage%>;
-url = url + "&col="+<%=col%>;
-url = url + "&word="+<%=word%>;
-location.href=url; 
-} --%>
+
+location.href=url;
+}
+	
+}
  
 </script>
 <style>
-button, #rsubmit{
+button{
     width: auto;
     padding: 8px 18px;
     background-color: #000000;
@@ -120,8 +126,17 @@ button, #rsubmit{
     border: 1px solid black;
     margin: 10px;
 }
+input[type=submit]{
+    width: auto;
+    padding: 8px 6px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    border: 1px solid black;
+    margin: 5px;
+}
 
-button:hover, #rsubmit:hover{
+button:hover{
 	opacity: 0.8;
 }
 
@@ -187,16 +202,15 @@ for(int i=0; i<5; i++){
  	for(int i=0; i<list.size(); i++){
  		rcdto = list.get(i);
 %>
-<%=rcdto.getRcno() %><br>
+<%=rcdto.getId() %><br>
 <%=rcdto.getRccontent() %><br>
 <%=rcdto.getRcdate() %><br>
-<span style="float: right;">
-<script type="text/javascript">
 
-</script>
-<a href="javascript:cupdate(<%=rcdto.getRcno() %>,<%=rcdto.getRccontent() %>)">
- 수정</a>|<%-- <a href="javascript:cdelete(<%=rcdto.getRcno() %>)">삭제</a> --%>
-   </span>
+<span style="float: right;">
+<a href="javascript:cupdate('<%=rcdto.getRcno()%>','<%= rcdto.getRccontent() %>')">
+ 수정</a>|
+<a href="javascript:cdelete('<%=rcdto.getRcno() %>','<%=col%>', '<%=word%>')">삭제</a>
+</span>
 <hr>
 <% 
  	}
@@ -206,7 +220,7 @@ for(int i=0; i<5; i++){
  	
 <form name="rform" method='POST' action='./comment_create.jsp' >
  	<textarea rows="2" cols="28" name="rccontent" style="width: 90%" ></textarea>
- 	<input type="submit" name="rsubmit" value="등록">
+ 	<input type="submit" name="rsubmit" value="댓글등록">
  	<input type="hidden" name="rno" value=<%=rno%>>
  	<input type="hidden" name="id" value="rc_user">
  	<input type="hidden" name="nowPage" value=<%=nowPage%>>

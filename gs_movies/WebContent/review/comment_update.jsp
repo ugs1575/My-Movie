@@ -3,7 +3,6 @@
 <jsp:useBean id="rcdao" class="comment.CommentDAO"/>
 <jsp:useBean id="rcdto" class="comment.CommentDTO"/>
 <%
-System.out.println("rccontent:" +request.getParameter("rccontent"));
 rcdto.setRccontent(request.getParameter("rccontent"));
 rcdto.setRcno(Integer.parseInt(request.getParameter("rcno")));
 
