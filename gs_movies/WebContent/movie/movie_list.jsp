@@ -210,7 +210,7 @@ function mdel(no){
    <!-- Pagination -->
    
     <div style="padding:3%">
-    <%=utility.paging3(totalRecord, nowPage, recordPerPage, col, word)%>
+    <%=utility.movie_paging(totalRecord, nowPage, recordPerPage, col, word)%>
   </div>
   
     <!-- Modal for full size images on click-->

@@ -1,8 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="review.ReviewDAO"/>
-<jsp:useBean id="dto" class="review.ReviewDTO"/>
+<jsp:useBean id="ntdao" class="notice.NoticeDAO"/>
+<jsp:useBean id="ntdto" class="notice.NoticeDTO"/>
  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -11,30 +11,25 @@
 </head>
 
 <%
-request.setCharacterEncoding("utf-8");
 
-System.out.println(request.getParameter("rtitle"));
-System.out.println(request.getParameter("rcontent"));
-System.out.println(request.getParameter("passwd"));
-System.out.println(request.getParameter("rate"));
-System.out.println(request.getParameter("rno"));
+
 //form의 값 받기
-dto.setRtitle(request.getParameter("rtitle"));
-dto.setRcontent(request.getParameter("rcontent"));
-dto.setPasswd(request.getParameter("passwd"));
-dto.setRate(Integer.parseInt(request.getParameter("rate")));
+ntdto.setNttitle(request.getParameter("nttitle"));
+ntdto.setNtcontent(request.getParameter("ntcontent"));
+
+
 
 //hidden 값 받기
-dto.setRno(Integer.parseInt(request.getParameter("rno")));
-System.out.println("!!!!!!!!!!!!!!"+ dto.getRno());
+ntdto.setNtno(Integer.parseInt(request.getParameter("ntno")));
 String col = request.getParameter("col");
 String word = request.getParameter("word");
 String nowPage = request.getParameter("nowPage");
 
-boolean flag = dao.update(dto);
 
 
-System.out.println("review 글수정 결과 : " +flag);
+boolean flag = ntdao.update(ntdto);
+
+System.out.println("notice 글수정 결과 : " +flag);
 %>
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
@@ -124,8 +119,8 @@ button:hover {
 }
 </style>
 <script type="text/javascript">
-function rlist(){
-	var url = "review_list.jsp";
+function nlist(){
+	var url = "notice_list.jsp";
 	url = url + "?col=<%=col%>"
 	url = url + "&word=<%=word%>"
 	url = url + "&nowPage=<%=nowPage%>"
@@ -136,9 +131,9 @@ function rlist(){
 
   <div class="container" style="border:1px solid #ccc">
   <%if(flag){%>
-     <h1>Reviews 게시판 새 글 수정이 완료되었습니다. 감사합니다.</h1>
+     <h1>Notice 게시판 글 수정이 완료되었습니다. 감사합니다.</h1>
      <%}else{%>
-     <h1>Reviews 게시판 새 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h1>
+     <h1>Notice 게시판 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h1>
   	 <%} %>
    
     <hr>
@@ -146,7 +141,7 @@ function rlist(){
  
     <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="rlist()">Movie list</button>
+      <button type="button" class="homebtn" onclick="nlist()">notice list</button>
     </div>
   </div>
 

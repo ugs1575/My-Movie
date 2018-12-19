@@ -1,41 +1,29 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file = "../ssi/ssi.jsp" %>
+<%@ include file="../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="member.MemberDAO"/>
-<jsp:useBean id="dto" class="member.MemberDTO"/>
-
+<jsp:useBean id="mdao" class="member.MemberDAO"/>
+<jsp:useBean id="mdto" class="member.MemberDTO"/>
 
 <%
-String tempDir = application.getRealPath("/movie/temp");
-String upDir = application.getRealPath("/movie/storage");
+String id = request.getParameter("id");
+String psw = request.getParameter("psw");
 
-UploadSave upload = new UploadSave(request, -1, -1, tempDir);
 
-dto.setId(upload.getParameter("id"));
-dto.setName(UploadSave.encode(upload.getParameter("name")));
-dto.setEmail(upload.getParameter("email"));
-dto.setPsw(upload.getParameter("pwd"));
+Map map = new HashMap();
+map.put("id", id);
+map.put("psw", psw);
 
-FileItem fileItem = upload.getFileItem("fname");
+boolean flag = mdao.loginCheck(map);
+System.out.println(flag);
+mdto = mdao.read(id);
 
-int filesize = (int) fileItem.getSize();
 
-System.out.println("filesize:>>>>>>>>>>>>"+filesize);
-
-String fname = null;
-
-if(filesize>0){
-	fname = UploadSave.saveFile(fileItem,upDir);
-} else {
-	fname = "member.jpg";
+if(flag){
+	String grade = mdao.getGrade(id);
+	session.setAttribute("id",id);
+	session.setAttribute("grade",grade);
 }
 
-dto.setFname(fname);
-System.out.println("file name : " +fname);
-
-boolean flag = dao.create(dto);
-
-System.out.println("회원가입결과 : " +flag);
 %>
  
 <!-- Header -->
@@ -109,6 +97,8 @@ button:hover {
 /* Add padding to container elements */
 .container {
     padding: 16px;
+    margin-bottom: 8%
+    
 }
 
 /* Clear floats */
@@ -118,12 +108,7 @@ button:hover {
     display: table;
 }
 
-/* Change styles for login button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .loginbtn, .homebtn {
-       width: 100%;
-    }
-}
+
 </style>
 <body>
 
@@ -139,17 +124,10 @@ button:hover {
     <hr>
     
  
-    <div class="clearfix">
+  <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
       <button type="button" class="homebtn" onclick="location.href='../home.jsp'">Home</button>
     </div>
   </div>
 
-</body>
-  
-  
-  
-   
-
-
-<%-- <%@ include file = "../common/footer.jsp" %> --%>
+</body> 

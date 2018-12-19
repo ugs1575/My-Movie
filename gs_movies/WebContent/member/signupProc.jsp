@@ -1,41 +1,43 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="review.ReviewDAO"/>
-<jsp:useBean id="dto" class="review.ReviewDTO"/>
- <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<jsp:useBean id="mdao" class="member.MemberDAO"/>
+<jsp:useBean id="mdto" class="member.MemberDTO"/>
+
 
 <%
-request.setCharacterEncoding("utf-8");
+String tempDir = application.getRealPath("/member/temp");
+String upDir = application.getRealPath("/member/storage");
 
-System.out.println(request.getParameter("rtitle"));
-System.out.println(request.getParameter("rcontent"));
-System.out.println(request.getParameter("passwd"));
-System.out.println(request.getParameter("rate"));
-System.out.println(request.getParameter("rno"));
-//form의 값 받기
-dto.setRtitle(request.getParameter("rtitle"));
-dto.setRcontent(request.getParameter("rcontent"));
-dto.setPasswd(request.getParameter("passwd"));
-dto.setRate(Integer.parseInt(request.getParameter("rate")));
+UploadSave upload = new UploadSave(request, -1, -1, tempDir);
 
-//hidden 값 받기
-dto.setRno(Integer.parseInt(request.getParameter("rno")));
-System.out.println("!!!!!!!!!!!!!!"+ dto.getRno());
-String col = request.getParameter("col");
-String word = request.getParameter("word");
-String nowPage = request.getParameter("nowPage");
+mdto.setId(upload.getParameter("id"));
+mdto.setName(UploadSave.encode(upload.getParameter("name")));
+mdto.setEmail(upload.getParameter("email"));
+mdto.setPsw(upload.getParameter("pwd"));
 
-boolean flag = dao.update(dto);
+FileItem fileItem = upload.getFileItem("fname");
 
+int filesize = (int) fileItem.getSize();
 
-System.out.println("review 글수정 결과 : " +flag);
+System.out.println("filesize:>>>>>>>>>>>>"+filesize);
+
+String fname = null;
+
+if(filesize>0){
+	fname = UploadSave.saveFile(fileItem,upDir);
+} else {
+	fname = "member.jpg";
+}
+
+mdto.setFname(fname);
+System.out.println("file name : " +fname);
+
+boolean flag = mdao.create(mdto);
+
+System.out.println("회원가입결과 : " +flag);
 %>
+ 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
@@ -123,30 +125,23 @@ button:hover {
     }
 }
 </style>
-<script type="text/javascript">
-function rlist(){
-	var url = "review_list.jsp";
-	url = url + "?col=<%=col%>"
-	url = url + "&word=<%=word%>"
-	url = url + "&nowPage=<%=nowPage%>"
-	location.href = url;
-}
-</script>
 <body>
 
   <div class="container" style="border:1px solid #ccc">
   <%if(flag){%>
-     <h1>Reviews 게시판 새 글 수정이 완료되었습니다. 감사합니다.</h1>
-     <%}else{%>
-     <h1>Reviews 게시판 새 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h1>
-  	 <%} %>
+     <h1>회원가입을 축하드립니다 !</h1>
+     <p>Thank you for join us :)</p>
+    <%} else{ %>
+     <h1>회원가입 실패. 다시 한번 시도해 주세요</h1>
+     <p>Plz try again</p>
+    <%} %>
    
     <hr>
     
  
     <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="rlist()">Movie list</button>
+      <button type="button" class="homebtn" onclick="location.href='../home.jsp'">Home</button>
     </div>
   </div>
 
@@ -158,5 +153,3 @@ function rlist(){
 
 
 <%-- <%@ include file = "../common/footer.jsp" %> --%>
-
-

@@ -1,9 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file = "../ssi/ssi.jsp" %>
-<%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="rdao" class="review.ReviewDAO"/>
-<jsp:useBean id="rdto" class="review.ReviewDTO"/>
-
+<jsp:useBean id="ntdao" class="notice.NoticeDAO"/>
+<jsp:useBean id="ntdto" class="notice.NoticeDTO"/>
+<%
+	int ntno = Integer.parseInt(request.getParameter("ntno"));
+	ntdto = ntdao.read(ntno);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,39 +38,21 @@ input[type=button]:hover, input[type=submit]:hover {
 
 
 </style>
-<script type="text/javascript" src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
- 
-<script type="text/JavaScript">
-  window.onload=function(){
-   CKEDITOR.replace('rcontent');
-  };
-</script>
 <script type="text/javascript">
 function inputCheck(f){
 	alert("inputcheck 실행");
-	
-	
-	if(f.rtitle.value==""){
+
+	if(f.nttitle.value==""){
 		alert("제목을 입력해 주세요");
-		f.rtitle.focus();
+		f.nttitle.focus();
 		return false;
 	}
 	
-	if(f.passwd.value==""){
-		alert("패스워드를 입력해 주세요");
-		f.passwd.focus();
-		return false;
-	}
-	
-	if(f.rcontent.value==""){
+	if(f.ntcontent.value==""){
 		alert("내용을 입력해 주세요");
-		f.rcontent.focus();
+		f.ntcontent.focus();
 		return false;
 	}
-	
-	
-	
-	
 
 }
 </script>
@@ -89,44 +72,32 @@ function inputCheck(f){
 
 <!-- Movies Section -->
 <div class="w3-container w3-padding-32" id="projects">
-  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Review 글 등록</h3>
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Notice 글 수정</h3>
 </div>
 
 <div class="container">
  
-<FORM name='frm' method='POST' action='./review_createProc.jsp' onsubmit="return inputCheck(this)">
+<FORM name='frm' method='POST' action='./notice_updateProc.jsp'
+ onsubmit="return inputCheck(this)">
+ <input type="hidden" name="ntno" value="<%=ntno %>">
+ <input type="hidden" name="col" value="<%=request.getParameter("col") %>">
+<input type="hidden" name="word" value="<%=request.getParameter("word") %>">
+<input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage") %>">
   <TABLE class="table table-hover">
     <TR>
       <TH>제목</TH>
-      <TD><input type="text" name="rtitle"></TD>
+      <TD><input type="text" name="nttitle" value=<%=ntdto.getNttitle() %>></TD>
     </TR>
      <TR>
       <TH>내용</TH>
-      <TD colspan="2"><textarea rows="10" cols="45" name="rcontent"></textarea></TD>
-    </TR>
-     <TR>
-      <TH>평점</TH>
-      <TD>
-      <select name="rate">
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-	  </select>
-      </TD>
-    </TR>
-    <TR>
-      <TH>패스워드</TH>
-      <TD><input type="text" name="passwd"></TD>
+      <TD colspan="2"><textarea rows="10" cols="45" name="ntcontent"><%=ntdto.getNtcontent() %></textarea></TD>
     </TR>
    
   </TABLE>
   
   <div class='bottom'>
-    <input type='submit' value='등록하기'>
-    <input type='button' value='등록취소' onclick="history.back()">
+    <input type='submit' value='수정하기'>
+    <input type='button' value='수정취소' onclick="history.back()">
   </DIV>
 </FORM>
 </div>

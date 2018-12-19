@@ -19,3 +19,13 @@ values('choi','123','최우식','email2@email.com','H');
 
 insert into movie_member(id, psw, name, email, grade)
 values('admin','123','관리자','admin@email.com','A');
+
+select count(*) from movie_member
+where id = 'choi'
+and psw = '123';
+
+--delete
+delete from MOVIE_MEMBER where grade is null;
+
+
+

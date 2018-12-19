@@ -152,6 +152,15 @@ button:hover {
     }
 }
 </style>
+<script type="text/javascript">
+function mlist(){
+	var url = "movie_list.jsp";
+	url = url + "?col=<%=col%>"
+	url = url + "&word=<%=word%>"
+	url = url + "&nowPage=<%=nowPage%>"
+	location.href = url;
+}
+</script>
 <body>
 
   <div class="container" style="border:1px solid #ccc">
@@ -166,7 +175,7 @@ button:hover {
  
     <div class="clearfix">
       <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="location.href='movie_list.jsp'">Movie list</button>
+      <button type="button" class="homebtn" onclick="mlist()">Movie list</button>
     </div>
   </div>
 

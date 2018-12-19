@@ -1,16 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
-<jsp:useBean id="dao" class="review.ReviewDAO"/>
-<jsp:useBean id="dto" class="review.ReviewDTO"/>
-<!-- <!DOCTYPE html>
+<jsp:useBean id="ntdao" class="notice.NoticeDAO"/>
+<jsp:useBean id="ntdto" class="notice.NoticeDTO"/>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head> -->
+</head>
 
 
 
@@ -42,17 +42,17 @@ map.put("word", word);
 map.put("sno", sno);
 map.put("eno", eno);
 
-List<ReviewDTO> list = dao.list(map);
+List<NoticeDTO> list = ntdao.list(map);
 //전체 레코드 개수(col, word)
-int totalRecord = dao.total(map);
+int totalRecord = ntdao.total(map);
 %>
 
 <script type="text/javascript" src="./httpRequest.js"></script>
 <script type="text/javascript">
 
-function read(rno){
-	var url = "review_read.jsp";
-	url = url + "?rno="+rno;
+function read(ntno){
+	var url = "notice_read.jsp";
+	url = url + "?ntno="+ntno;
 	url = url + "&col=<%=col%>"
 	url = url + "&word=<%=word%>"
 	url = url + "&nowPage=<%=nowPage%>"
@@ -66,7 +66,7 @@ function read(rno){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Review</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of review</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Notice</b></span></h1>
   </div>
 </header>
 
@@ -75,24 +75,15 @@ function read(rno){
 
   <!-- Movies Section -->
   <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Review List</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Notice</h3>
     
     <div class="search w3-display-bottomright" style="padding:20px 50px">
-		<form method="post" action="./review_list.jsp">
+		<form method="post" action="./notice_list.jsp">
 			<select name="col">
-				<option value="writer"
-					<%if (col.equals("writer")) {
-				out.print("selected"); // 내가 선택한 분류? 가 고정되어있도록..?
-			}%>>작성자</option>
-				<option value="rtitle"
-					<%if (col.equals("rtitle")) {
+				<option value="nttitle"
+					<%if (col.equals("nttitle")) {
 				out.print("selected");
 			}%>>제목</option>
-				<option value="rcontent"
-					<%if (col.equals("rcontent")) {
-				out.print("selected");
-			}%>>내용</option>
-				<option value="total">전체출력</option>
 			</select>
 			<input type="text" name="word" value="<%=word%>" style="border:1px solid #CCCCCC">
 			 <button type="submit" class="btn btn-default btn-sm">
@@ -111,7 +102,6 @@ function read(rno){
 				<TR>
 					<TH>번호</TH>
 					<TH>제목</TH>
-					<TH>성명</TH>
 					<TH>조회수</TH>
 					<TH>등록일</TH>
 				</TR>
@@ -128,22 +118,21 @@ function read(rno){
 			<%
 				} else {
 					for (int i = 0; i < list.size(); i++) {
-						dto = list.get(i);
+						ntdto = list.get(i);
 			%>
 			<tbody>
 				<tr>
-					<td><%=dto.getRno()%></td>
+					<td><%=ntdto.getNtno()%></td>
 					<td>
-						<a href="javascript:read('<%=dto.getRno()%>')"><%=dto.getRtitle()%></a>
+						<a href="javascript:read('<%=ntdto.getNtno()%>')"><%=ntdto.getNttitle()%></a>
 						<%
-							if (utility.compareDay(dto.getRdate())) {
+							if (utility.compareDay(ntdto.getNtdate())) {
 										out.print("<img src = '../menu/images/me.jpg'>");
 									}
 						%>
 					</td>
-					<td><%=dto.getWriter()%></td>
-					<td><%=dto.getViewcnt()%></td>
-					<td><%=dto.getRdate()%></td>
+					<td><%=ntdto.getViewcnt()%></td>
+					<td><%=ntdto.getNtdate()%></td>
 				</tr>
 			</tbody>
 			<%
@@ -159,7 +148,7 @@ function read(rno){
    <!-- Pagination -->
    
 	<div style="padding:3%">
-    <%=utility.review_paging(totalRecord, nowPage, recordPerPage, col, word)%>
+    <%=utility.notice_paging(totalRecord, nowPage, recordPerPage, col, word)%>
     </div>
   
 

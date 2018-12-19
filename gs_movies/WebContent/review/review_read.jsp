@@ -6,6 +6,7 @@
 <jsp:useBean id="rcdao" class="comment.CommentDAO"/>
 <jsp:useBean id="rcdto" class="comment.CommentDTO"/>
 
+
 <%
 int rno = Integer.parseInt(request.getParameter("rno"));
 dao.upViewcnt(rno);
@@ -232,7 +233,7 @@ for(int i=0; i<5; i++){
 
 </div>
 <div style="padding:3%">
-<%=utility.cpaging(total, nPage, recordPerPage, url, rno, nowPage, col, word)%>
+<%=utility.comment_paging(total, nPage, recordPerPage, url, rno, nowPage, col, word)%>
 </div>
   
 
