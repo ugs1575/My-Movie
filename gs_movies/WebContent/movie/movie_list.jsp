@@ -3,20 +3,10 @@
 <%@ include file = "../common/navbar.jsp" %>
 <jsp:useBean id="dao" class="movie.MovieDAO"/>
 <jsp:useBean id="dto" class="movie.MovieDTO"/>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
 
 <style>
-/* button{
-color:white; 
-display:inline-block;
-} */
+
 
 #readspan{
  color:white; 
@@ -49,9 +39,6 @@ table{
 	color:white; 
 	text-align:center;
 }
-/*  tr, td{
-border:1px solid white; 
-}  */
 
 input[type=text]{
 	background-color:transparent; 
@@ -100,10 +87,10 @@ int totalRecord = dao.total(map);
 <script type="text/javascript">
  
 function sendR(no) {
-	alert('read실행');
 	 var params = "no="+no;
-	   var displayArea = document.getElementById("modal01");
-	   displayArea.innerHTML = "";
+
+	 var displayArea = document.getElementById("modal01");
+	 displayArea.innerHTML = "";
 	   
 	   sendRequest("./movie_read.jsp", params, responseR, "post");
 }
@@ -124,9 +111,9 @@ function responseR() {
 function mupdate(no){
 	var url = "movie_update.jsp";
 	url = url + "?no="+no;
-	url = url + "&col=<%=request.getParameter("col")%>"
-	url = url + "&word=<%=request.getParameter("word")%>"
-	url = url + "&nowPage=<%=request.getParameter("nowPage")%>"
+	url = url + "&col=<%=col%>"
+	url = url + "&word=<%=word%>"
+	url = url + "&nowPage=<%=nowPage%>"
 	
 	location.href=url;
 }
@@ -192,7 +179,8 @@ function mdel(no){
   	  dto = list.get(i);%> 
   
     <div class="w3-third w3-container w3-margin-bottom">
-      <img src="./storage/<%=dto.getPoster() %>" name ="poster" width=100% height=310px class="w3-hover-opacity" onclick="sendR(<%=dto.getNo()%>)">
+      <img src="./storage/<%=dto.getPoster() %>" name ="poster" width=100% height=310px class="w3-hover-opacity" 
+      onclick="sendR(<%=dto.getNo()%>)">
       <div class="w3-container w3-white">
         <p><b><%=dto.getTitle() %></b></p>
         <p><%=dto.getContent() %></p>
@@ -212,7 +200,7 @@ function mdel(no){
     <div style="padding:3%">
     <%=utility.movie_paging(totalRecord, nowPage, recordPerPage, col, word)%>
   </div>
-  
+
     <!-- Modal for full size images on click-->
   <div id="modal01" class="w3-modal" style="padding-top:0; background-color:rgba(0,0,0,0.7)">
   </div>

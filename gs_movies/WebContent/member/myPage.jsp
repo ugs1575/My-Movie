@@ -1,11 +1,17 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "../ssi/ssi.jsp" %>
 <%@ include file = "../common/navbar.jsp" %>
+<jsp:useBean id="mdao" class="member.MemberDAO"/>
+<jsp:useBean id="mdto" class="member.MemberDTO"/>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+<%
+String mypage_id = (String)session.getAttribute("id");
+String mypage_grade=(String)session.getAttribute("grade");
+mdto = mdao.read(mypage_id);
+%>
 
 <style>
 body {
@@ -70,31 +76,7 @@ input[type=text]{
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#userPic").click(function(){
-    	$("#uploadFile").click();
-    });
-    
-});
-
-function getThumbnailPreview(input, targetId) {
-	alert("getpreview");
-
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            var element = window.document.getElementById(targetId);
-            element.setAttribute("src", e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-
-
-
  function inputCheck(f){
 	alert("inputcheck 실행");
 	
@@ -131,74 +113,6 @@ function getThumbnailPreview(input, targetId) {
 	}
 
 }
- 
-
-function valid(id, email){
-	if(id=="사용 가능한 ID 입니다" && email=="사용 가능한 e-mail 입니다"){
-		return true;
-	}else if(id=="중복되는 ID 입니다. 다시 시도해 주세요 !" && email=="중복되는 e-mail 입니다. 다시 시도해 주세요 !"){
-		return false;
-	}else{
-		return false;
-	} 
-}
-
-function duplicateId(id){
-	
-	var url = "id_jquery.jsp";
-	
-	var validId = $.ajax({
-		url : url,
-		dataType : 'text',
-		data : {"id": id},
-		async: false,
-		success : function(data){
-			$("#checkId").text(data.trim()).css("color","red"); 
-			if(data.trim() == "중복되는 ID 입니다. 다시 시도해 주세요 !"){
-				$("#id").css("border-bottom","2px solid red");
-			}else if(data.trim() == "사용 가능한 ID 입니다"){
-				$("#id").css("border-bottom","2px solid grey");	
-			}
-			
-		}
-	});
-
-	return validId.responseText.trim();
-		
-	
-	
-
-
-}
-
-function duplicateEmail(email){
-	
-	var url = "email_jquery.jsp";
-	
-
-	var validEmail = $.ajax({
-		url : url,
-		dataType : 'text',
-		data : {"email": email},
-		async: false,
-		success : function(data){
-			$("#checkEmail").text(data.trim()).css("color","red");
-			if(data.trim() == "중복되는 e-mail 입니다. 다시 시도해 주세요 !"){
-				$("#email").css("border-bottom","2px solid red");
-			}else if(data.trim() == "사용 가능한 e-mail 입니다"){
-				$("#email").css("border-bottom","2px solid grey");
-			}
-			
-		}
-	});
-	
-	return validEmail.responseText.trim();
-	
-
-}
-
-
-
 
 </script>
 </head>
@@ -224,24 +138,19 @@ function duplicateEmail(email){
 	<div class="w3-col l8" id="infocontainer">
 	  <p>
 	  <label for="id">ID</label><br>
-	  <input type="text" id="id" name="id"><br>
+	  <span><%=mypage_id %></span><br>
 	  <span id="checkId"></span>
 	  </p>
 	  
-	  <p>
-	  <label for="pwd">Password</label><br>
-	  <input type="text" name="pwd">
-	  </p>
 	  
 	  <p>
 	  <label for="name">Name</label><br>
-	  <input type="text" name="name"><br>
+	  <span><%=mdto.getName() %></span><br>
 	  </p>
 	  
 	  <p>
 	  <label for="email">Email</label><br>
-	  <input type="text" id="email" name="email">
-	  <span id="checkEmail"></span>
+	  <span><%=mdto.getEmail() %></span>
 	  </p>
 	  
 	</div>
@@ -249,9 +158,7 @@ function duplicateEmail(email){
 	  
 	<div class="w3-col l4 w3-center">
 		<div id="imgcontainer">
-	    <img id="userPic" src="./img/img_avatar.png">
-	    <input type="file" id="uploadFile" name ="fname" style="display: none" 
-	   	onchange="getThumbnailPreview(this, 'userPic')"/>
+	    <img id="userPic" src="../member/storage/<%=mdto.getFname() %>">
 	   	</div>
 	</div>
 </div>

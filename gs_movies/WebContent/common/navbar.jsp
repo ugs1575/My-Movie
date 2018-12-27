@@ -5,18 +5,6 @@ String root = request.getContextPath();
 String user_id = (String)session.getAttribute("id");
 String user_grade=(String)session.getAttribute("grade");
 
-String lognav = null;
-if(user_id!=null && user_grade.equals("A")){
-	System.out.println("관리자 로그인");
-	   lognav="관리자";
-}
-if(user_id==null){
-	lognav ="Login";
-} else{
-	lognav = "Logout";
-}
-
-
 %>
 
 <!DOCTYPE html>
@@ -42,26 +30,25 @@ if(user_id==null){
  <!-- drop down menu for admin -->    
 <div class="dropdown" style="border:1px solid black">
  <a href="<%=root %>/home.jsp" class="w3-button">Home</a>
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Movie
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">HTML</a></li>
-      <li><a class="dropdown-item" href="#">CSS</a></li>
-      <li><a class="dropdown-item" href="#">JavaScript</a></li>
+      <li><a class="dropdown-item" href="<%=root%>/movie/movie_list.jsp">List</a></li>
+      <li><a class="dropdown-item" href="<%=root%>/movie/movie_create.jsp">Movie 글 작성</a></li>
     </ul>
 <a href="<%=root%>/review/review_list.jsp" class=" w3-button">Reviews</a>
       <a href="#Notice" class="w3-button">Notice</a>
       <a href="#About" class="w3-button">About</a>
       <%
-      if (lognav.equals("Logout")){
+      if (user_id!=null){
       %>
-      <a href="<%=root%>/member/logout.jsp" class=" w3-button">Logout</a>
-     
+      	<a href="<%=root%>/member/myPage.jsp" class=" w3-button">My Page</a>
+      	<a href="<%=root%>/member/logout.jsp" class=" w3-button">Logout</a>
       <%}else{ 
       %>
-    <a href="<%=root%>/member/loginForm.jsp" class=" w3-button">Login</a>
+    	<a href="<%=root%>/member/loginForm.jsp" class=" w3-button">Login</a>
+      	<a href="<%=root%>/member/signupForm.jsp" class=" w3-button">Sign-up</a>
       <%}%>
-      <a href="<%=root%>/member/signupForm.jsp" class=" w3-button">Sign-up</a>
  </div>
  <!-- drop down menu end --> 
       

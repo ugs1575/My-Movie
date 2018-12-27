@@ -3,13 +3,12 @@
 <jsp:useBean id="dto" class="movie.MovieDTO"/>
 <%
 	int no = Integer.parseInt(request.getParameter("no"));
+	String col = request.getParameter("col");
+	String word = request.getParameter("word");
+	String nowPage = request.getParameter("nowPage");
 	dto = dao.read(no);
 %>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style type="text/css">
@@ -134,6 +133,11 @@ function inputCheck(f){
 <input type="hidden" name="col" value="<%=request.getParameter("col") %>">
 <input type="hidden" name="word" value="<%=request.getParameter("word") %>">
 <input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage") %>">
+<%
+
+System.out.println("update:"+request.getParameter("col")+","+request.getParameter("word")+","+request.getParameter("nowPage"));
+
+%>
 <input type="hidden" name="oldMainposter" value="<%=dto.getMainPoster() %>">
 <input type="hidden" name="oldposter" value="<%=dto.getPoster() %>">
   <TABLE class="table table-hover">
@@ -186,12 +190,15 @@ function inputCheck(f){
      <TR>
       <TH>관람 등급</TH>
       <TD>
-      <select name="viewLevel" value="<%=dto.getViewLevel() %>">
+      <select name="viewLevel" >
 			<option value="전체">전체관람가</option>
 			<option value="12세">12세 이상 관람가</option>
 			<option value="15세">15세 이상 관람가</option>
 			<option value="청불">청소년 관람불가</option>
 	  </select>
+	   <script type="text/javascript">
+	 document.frm.viewLevel.value="<%=dto.getViewLevel()%>";
+	</script>
       </TD>
     </TR>
     <TR>
@@ -204,7 +211,7 @@ function inputCheck(f){
     </TR>
     <TR>
       <TH>줄거리</TH>
-      <TD colspan="2"><textarea rows="10" cols="45" name="content" value="<%=dto.getContent() %>"></textarea></TD>
+      <TD colspan="2"><textarea rows="10" cols="45" name="content" ><%=dto.getContent() %></textarea></TD>
     </TR>
    
   </TABLE>

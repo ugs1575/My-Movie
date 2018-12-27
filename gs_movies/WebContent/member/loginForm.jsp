@@ -6,10 +6,6 @@
 
 
 <style>
-body {
-font-family: Arial, Helvetica, sans-serif;
-}
-
 
 form {
 border: 3px solid #f1f1f1;
@@ -42,11 +38,11 @@ input[type=text]{
 }
 
 
-#nextbtn:hover, #homebtn:hover{
+#loginbtn:hover{
 	opacity: 0.8;
 }
 
-#loginbtn,#homebtn {
+#loginbtn{
     width: auto;
     padding: 10px 18px;
     background-color: #000000;
@@ -127,8 +123,7 @@ input[type=text]{
 	
 
   <div class="container">
- 	<input type="submit" value="Login" id="loginbtn" style="float:right">
- 	<input type="button" value="취소" id="homebtn" onclick="history.back()">
+ 	<input type="submit" value="로그인" id="loginbtn" style="float:right">
   </div>
 
  
