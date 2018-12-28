@@ -12,7 +12,7 @@ form {
 margin: auto;
 }
 
-input[type=text]{
+input[type=text],input[type=Password]{
 	width:40%;
     margin: 8px 0;
     box-sizing: border-box;
@@ -107,7 +107,7 @@ margin: auto;
 	  
 	  <p>
 	  <label for="pwd">Password</label><br>
-	  <input type="text" name="psw">
+	  <input type="Password" name="psw">
 	  </p>
 	  
  	<input type="submit" value="로그인" id="loginbtn">
