@@ -3,7 +3,7 @@
 <%@ include file = "../common/navbar.jsp" %>
 <jsp:useBean id="dao" class="movie.MovieDAO"/>
 <jsp:useBean id="dto" class="movie.MovieDTO"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <style>
 
@@ -23,6 +23,7 @@
 	margin-bottom:20px;
 	background-color:rgba(0,0,0,0.8);
 }
+
 #minibox{
 	width:900px; 
 	height:730px; 
@@ -122,9 +123,9 @@ function mdel(no){
     if (r == true) {
         var url = "movie_delete.jsp";
     	url = url + "?no="+no;
-    	url = url + "&col=<%=request.getParameter("col")%>"
-    	url = url + "&word=<%=request.getParameter("word")%>"
-    	url = url + "&nowPage=<%=request.getParameter("nowPage")%>"
+    	url = url + "&col=<%=col%>"
+    	url = url + "&word=<%=word%>"
+    	url = url + "&nowPage=<%=nowPage%>"
     	
     	location.href=url;
     }
@@ -138,7 +139,7 @@ function mdel(no){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br></h1>
   </div>
 </header>
 

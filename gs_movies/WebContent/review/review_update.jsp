@@ -38,7 +38,7 @@ input[type=button]:hover, input[type=submit]:hover {
  
 <script type="text/JavaScript">
   window.onload=function(){
-   CKEDITOR.replace('content');
+   CKEDITOR.replace('rcontent');
   };
 </script>
 
@@ -89,7 +89,7 @@ function inputCheck(f){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Reviews</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of review</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>영화 리뷰</b></span><br></h1>
   </div>
 </header>
 
@@ -102,7 +102,7 @@ function inputCheck(f){
   <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Reviews 글 수정</h3>
 </div>
 
-<div class="container">
+<div class="container" style="width: 70%; margin:auto;">
  
 <FORM name='frm' method='POST' action='./review_updateProc.jsp' onsubmit="return inputCheck(this)">
 <input type="hidden" name="rno" value="<%=rno %>">

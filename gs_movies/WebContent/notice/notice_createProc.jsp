@@ -32,93 +32,47 @@ System.out.println("notice 글등록 결과 : " +flag);
   
 <!--   Sign-up Section -->
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box}
-
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-    background-color: #000000;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-button:hover {
-    opacity:1;
-}
-
-/* Extra styles for the login button */
-.loginbtn {
-    padding: 14px 20px;
-    color: black;
-    border: 1px solid #f1f1f1;
-    background-color: #ffffff;
-}
-
-/* Float login and signup buttons and add an equal width */
-.loginbtn, .homebtn {
-  float: left;
-  width: 50%;
-}
 
 /* Add padding to container elements */
 .container {
     padding: 16px;
+    margin: auto;
+    margin-bottom: 8%;
+	width: 50%;
+    
 }
 
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+#againbtn, #homebtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
 }
 
-/* Change styles for login button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .loginbtn, .homebtn {
-       width: 100%;
-    }
+#againbtn:hover, #homebtn:hover{
+	opacity: 0.8;
 }
-</style>
+</style> 
+
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
+  <div class="container" >
   <%if(flag){%>
-     <h1>Notice 게시판 새 글 등록이 완료되었습니다. 감사합니다.</h1>
+     <h2>Notice 게시판 새 글 등록이 완료되었습니다. 감사합니다.</h2>
      <%}else{%>
-     <h1>Notice 게시판 새 글 등록이 실패하였습니다. 다시 한번 시도해주세요.</h1>
+     <h2>Notice 게시판 새 글 등록이 실패하였습니다. 다시 한번 시도해주세요.</h2>
   	 <%} %>
    
     <hr>
     
  
-    <div class="clearfix">
-      <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="location.href='notice_list.jsp'">notice list</button>
+     <div>
+    <%if(flag==false){ %>
+     <button type="button" id="againbtn" onclick="history.back()">다시시도</button>
+     <%} %>
+      <button type="button" id="homebtn" onclick="location.href='notice_list.jsp'" style="float:right">공지 목록</button>
     </div>
   </div>
 

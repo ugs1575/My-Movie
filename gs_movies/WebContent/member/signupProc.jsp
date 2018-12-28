@@ -10,11 +10,13 @@
 /* Add padding to container elements */
 .container {
     padding: 16px;
-    margin-bottom: 8%
+    margin: auto;
+    margin-bottom: 8%;
+	width: 50%;
     
 }
 
-#homebtn, #loginbtn {
+#homebtn, #againbtn {
     width: auto;
     padding: 10px 18px;
     background-color: #000000;
@@ -23,7 +25,7 @@
     border: 1px solid black;
 }
 
-#homebtn:hover, #loginbtn:hover{
+#homebtn:hover, #agianbtn:hover{
 	opacity: 0.8;
 }
 </style>
@@ -66,7 +68,7 @@ System.out.println("회원가입결과 : " +flag);
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up 결과</b></span><br></h1>
   </div>
 </header>
 
@@ -78,7 +80,7 @@ System.out.println("회원가입결과 : " +flag);
 
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
+  <div class="container">
   <%if(flag){%>
      <h1>회원가입을 축하드립니다 !</h1>
      <p>Thank you for join us :)</p>
@@ -91,7 +93,9 @@ System.out.println("회원가입결과 : " +flag);
     
  
     <div>
-      <button type="button" id="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
+    <%if(flag==false){ %>
+     <button type="button" id="againbtn" onclick="history.back()">다시시도</button>
+     <%} %>
       <button type="button" id="homebtn" onclick="location.href='../home.jsp'" style="float:right">Home</button>
     </div>
   </div>

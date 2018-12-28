@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file = "../common/navbar.jsp" %>
 <jsp:useBean id="ntdao" class="notice.NoticeDAO"/>
 <jsp:useBean id="ntdto" class="notice.NoticeDTO"/>
 <%
@@ -10,7 +11,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style type="text/css">
 
@@ -62,7 +62,7 @@ function inputCheck(f){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>공지</b></span><br> </h1>
   </div>
 </header>
 
@@ -75,7 +75,7 @@ function inputCheck(f){
   <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Notice 글 수정</h3>
 </div>
 
-<div class="container">
+<div class="container" style="width: 50%; margin:auto;">
  
 <FORM name='frm' method='POST' action='./notice_updateProc.jsp'
  onsubmit="return inputCheck(this)">
@@ -83,7 +83,7 @@ function inputCheck(f){
  <input type="hidden" name="col" value="<%=request.getParameter("col") %>">
 <input type="hidden" name="word" value="<%=request.getParameter("word") %>">
 <input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage") %>">
-  <TABLE class="table table-hover">
+  <TABLE class="w3-table w3-hoverable">
     <TR>
       <TH>제목</TH>
       <TD><input type="text" name="nttitle" value=<%=ntdto.getNttitle() %>></TD>

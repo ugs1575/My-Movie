@@ -7,7 +7,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -66,7 +65,7 @@ function read(ntno){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Notice</b></span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>공지</b></span></h1>
   </div>
 </header>
 
@@ -75,7 +74,7 @@ function read(ntno){
 
   <!-- Movies Section -->
   <div class="w3-container w3-padding-32" id="projects">
-    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Notice</h3>
+    <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Notice 목록</h3>
     
     <div class="search w3-display-bottomright" style="padding:20px 50px">
 		<form method="post" action="./notice_list.jsp">
@@ -97,7 +96,7 @@ function read(ntno){
   
   
   
-  <TABLE class="table table-hover" style="width:80%; margin:auto;">
+  <TABLE class="w3-table w3-hoverable" style="width:80%; margin:auto;">
 			<thead>
 				<TR>
 					<TH>번호</TH>

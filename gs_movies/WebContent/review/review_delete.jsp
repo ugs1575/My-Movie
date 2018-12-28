@@ -19,7 +19,7 @@
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>영화 리뷰</b></span><br> </h1>
   </div>
 </header>
 
@@ -30,76 +30,27 @@
   
 <!--   Sign-up Section -->
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box}
-
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-    background-color: #000000;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-button:hover {
-    opacity:1;
-}
-
-/* Extra styles for the login button */
-.loginbtn {
-    padding: 14px 20px;
-    color: black;
-    border: 1px solid #f1f1f1;
-    background-color: #ffffff;
-}
-
-/* Float login and signup buttons and add an equal width */
-.loginbtn, .homebtn {
-  float: left;
-  width: 50%;
-}
 
 /* Add padding to container elements */
 .container {
     padding: 16px;
+    margin: auto;
+	width: 50%;
+	margin-bottom: 8%;
+    
 }
 
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+#submit, #cancel {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
 }
 
-/* Change styles for login button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .loginbtn, .homebtn {
-       width: 100%;
-    }
+#submit:hover, #cancel:hover{
+	opacity: 0.8;
 }
 </style>
 <script type="text/javascript">
@@ -120,16 +71,16 @@ function inputCheck(f){
 <input type="hidden" name="col" value="<%=request.getParameter("col") %>">
 <input type="hidden" name="word" value="<%=request.getParameter("word") %>">
 <input type="hidden" name="nowPage" value="<%=request.getParameter("nowPage") %>">
-  <div class="container" style="border:1px solid #ccc">
- 	글을 삭제하시면 복구가 불가능합니다. 
- 	비밀번호를 입력해 주세요
+  <div class="container">
+ 	<h3>글을 삭제하시면 복구가 불가능합니다.<br> 
+ 	비밀번호를 입력해 주세요</h3>
 	<input type="password" name="passwd">   
     <hr>
     
  
-    <div class="clearfix">
-      <input type='submit' value='후기 삭제하기'>
-      <input type='button' value='후기 삭제취소' onclick="history.back()">
+    <div>
+      <input type='submit' id='submit' value='후기 삭제하기'>
+      <input type='button' id='cancel' value='후기 삭제취소' onclick="history.back()"  style="float:right">
     </div>
   </div>
  </FORM>

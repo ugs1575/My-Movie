@@ -12,7 +12,9 @@
 /* Add padding to container elements */
 .container {
     padding: 16px;
-    margin-bottom: 8%
+    margin: auto;
+    margin-bottom: 8%;
+	width: 50%;
     
 }
 
@@ -90,7 +92,7 @@ System.out.println("movie 글수정 결과 : " +flag);
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br> </h1>
   </div>
 </header>
 
@@ -111,19 +113,21 @@ function mlist(){
 </script>
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
+  <div class="container">
   <%if(flag){%>
-     <h1>Movies 게시판 새 글 수정이 완료되었습니다. 감사합니다.</h1>
+     <h2>Movies 게시판 새 글 수정이 완료되었습니다. 감사합니다.</h2>
      <%}else{%>
-     <h1>Movies 게시판 새 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h1>
+     <h2>Movies 게시판 새 글 수정이 실패하였습니다. 다시 한번 시도해주세요.</h2>
   	 <%} %>
    
     <hr>
     
  
     <div>
+      <%if(flag==false){ %>
       <button type="button" id="loginbtn" onclick="history.back()">다시시도</button>
-      <button type="button" id="homebtn" onclick="mlist()" style="float:right">Movie list</button>
+       	<%} %>
+      <button type="button" id="homebtn" onclick="mlist()" style="float:right">Movie 목록</button>
     </div>
   </div>
 

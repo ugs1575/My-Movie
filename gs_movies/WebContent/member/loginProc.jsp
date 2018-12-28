@@ -10,7 +10,9 @@
 /* Add padding to container elements */
 .container {
     padding: 16px;
-    margin-bottom: 8%
+    margin: auto;
+	width: 50%;
+	margin-bottom: 8%;
     
 }
 
@@ -54,7 +56,7 @@ if(flag){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Login 결과</b></span><br></h1>
   </div>
 </header>
 
@@ -66,7 +68,7 @@ if(flag){
 
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
+  <div class="container">
   <%if(flag){%>
      <h1>로그인 성공 !</h1>
     <%} else{ %>

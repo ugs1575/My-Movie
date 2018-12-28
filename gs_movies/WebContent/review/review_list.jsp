@@ -61,7 +61,7 @@ function read(rno){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Review</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of review</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>영화 리뷰</b></span><br> </h1>
   </div>
 </header>
 
@@ -101,7 +101,7 @@ function read(rno){
   
   
   
-  <TABLE class="table table-hover" style="width:80%; margin:auto;">
+  <TABLE class="w3-table w3-hoverable" style="width:70%; margin:auto;">
 			<thead>
 				<TR>
 					<TH>번호</TH>

@@ -9,18 +9,20 @@ request.setCharacterEncoding("utf-8");
  
 int no = Integer.parseInt(request.getParameter("no"));
 
+
+
+
 dto = dao.read(no);
 String img_src = "./storage/"+dto.getMainPoster(); 
 System.out.println("img_src:"+img_src);
 
-/* edit & delete button */
-out.println("<button class='w3-button w3-transparent w3-xlarge w3-right' onclick='mupdate("+no+")'>");
-out.println("<span id='readspan' class='glyphicon glyphicon-edit'></span>");
-out.println("</button>");
-out.println("<button class='w3-button w3-transparent w3-xlarge w3-right' onclick='mdel("+no+")'>");
-out.println("<span id='readspan' class='glyphicon glyphicon-trash'></span>");
-out.println("</button>");
 
+out.println("<button class='w3-button w3-white w3-transparent w3-right' onclick='mupdate("+no+")'>");
+out.println("수정");
+out.println("</button>");
+out.println("<button class='w3-button w3-white w3-transparent w3-right' onclick='mdel("+no+")'>");
+out.println("삭제");
+out.println("</button>");
 /* black content box */
 out.println("<div id='blackbox' class='w3-display-container'>");
 

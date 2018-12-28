@@ -8,16 +8,12 @@
 <style>
 
 form {
-border: 3px solid #f1f1f1;
-width: 50%;
-height: 100%;
-margin: auto;
-margin-bottom: 8%
 
+margin: auto;
 }
 
 input[type=text]{
-	width: 60%;
+	width:40%;
     margin: 8px 0;
     box-sizing: border-box;
     border: none;
@@ -25,16 +21,9 @@ input[type=text]{
 }
 
 #infocontainer{
- 	 padding: 70px 70px 70px 70px;
+ 	padding: 70px 70px 70px 70px;
  	text-align:center;
  	
-}
-
-.container {
-    padding: 16px;
-    width:100%;
-    background-color:#f1f1f1;
-    
 }
 
 
@@ -51,6 +40,12 @@ input[type=text]{
     border: 1px solid black;
 }
 
+.container{
+width:80%; 
+height:70%; 
+border: 1px solid black;
+margin: auto;
+}
 </style>
 
 
@@ -91,7 +86,7 @@ input[type=text]{
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Login</b></span><br> <span class="w3-hide-small w3-text-light-grey">로그인 부탁드립니다</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Login</b></span><br></h1>
   </div>
 </header>
 
@@ -102,10 +97,9 @@ input[type=text]{
     <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Login From</h3>
   </div>  
 
-
 <form name='frm' id='frm' method='POST' action='./loginProc.jsp' onsubmit="return inputCheck(this)">
-<div class="w3-row">
-	<div class="w3-col l12" id="infocontainer">
+
+	<div id="infocontainer">
 	  <p>
 	  <label for="id">ID</label><br>
 	  <input type="text" name="id"><br>
@@ -116,16 +110,9 @@ input[type=text]{
 	  <input type="text" name="psw">
 	  </p>
 	  
-	</div>
-	  
-	
-</div>
-	
+ 	<input type="submit" value="로그인" id="loginbtn">
 
-  <div class="container">
- 	<input type="submit" value="로그인" id="loginbtn" style="float:right">
-  </div>
-
+ </div>
  
 </form>
 

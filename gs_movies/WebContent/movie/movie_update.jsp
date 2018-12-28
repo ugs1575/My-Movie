@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file = "../common/navbar.jsp" %>
 <jsp:useBean id="dao" class="movie.MovieDAO"/>
 <jsp:useBean id="dto" class="movie.MovieDTO"/>
 <%
@@ -9,7 +10,6 @@
 	dto = dao.read(no);
 %>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style type="text/css">
 
@@ -113,7 +113,7 @@ function inputCheck(f){
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Movies</b></span><br></h1>
   </div>
 </header>
 
@@ -123,10 +123,10 @@ function inputCheck(f){
 
 <!-- Movies Section -->
 <div class="w3-container w3-padding-32" id="projects">
-  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Movies 글 등록</h3>
+  <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16">Movies 글 수정</h3>
 </div>
 
-<div class="container">
+<div class="container" style="width: 50%; margin:auto;">
  
 <FORM name='frm' method='POST' action='./movie_updateProc.jsp' enctype="multipart/form-data" onsubmit="return inputCheck(this)">
 <input type="hidden" name="no" value="<%=dto.getNo() %>">
@@ -140,7 +140,7 @@ System.out.println("update:"+request.getParameter("col")+","+request.getParamete
 %>
 <input type="hidden" name="oldMainposter" value="<%=dto.getMainPoster() %>">
 <input type="hidden" name="oldposter" value="<%=dto.getPoster() %>">
-  <TABLE class="table table-hover">
+  <TABLE class="w3-table w3-hoverable">
     <TR>
       <TH>메인 포스터</TH>
       <TD><input type="file" name="mainPoster"></TD>

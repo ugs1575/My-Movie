@@ -5,9 +5,6 @@
 <jsp:useBean id="ntdto" class="notice.NoticeDTO"/>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <%
 	int ntno = Integer.parseInt(request.getParameter("ntno"));
@@ -24,7 +21,7 @@ System.out.println("notice 글삭제 결과 : " +flag);
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>공지</b></span><br></h1>
   </div>
 </header>
 
@@ -35,76 +32,27 @@ System.out.println("notice 글삭제 결과 : " +flag);
   
 <!--   Sign-up Section -->
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box}
-
-/* Full-width input fields */
-input[type=text], input[type=password] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-}
-
-input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-}
-
-hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-}
-
-/* Set a style for all buttons */
-button {
-    background-color: #000000;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-button:hover {
-    opacity:1;
-}
-
-/* Extra styles for the login button */
-.loginbtn {
-    padding: 14px 20px;
-    color: black;
-    border: 1px solid #f1f1f1;
-    background-color: #ffffff;
-}
-
-/* Float login and signup buttons and add an equal width */
-.loginbtn, .homebtn {
-  float: left;
-  width: 50%;
-}
 
 /* Add padding to container elements */
 .container {
     padding: 16px;
+    margin: auto;
+	width: 50%;
+	margin-bottom: 8%;
+    
 }
 
-/* Clear floats */
-.clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
+#homebtn, #againbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
 }
 
-/* Change styles for login button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-    .loginbtn, .homebtn {
-       width: 100%;
-    }
+#homebtn:hover, #againbtn:hover{
+	opacity: 0.8;
 }
 </style>
 <script type="text/javascript">
@@ -118,19 +66,21 @@ function nlist(){
 </script>	
 <body>
 
-  <div class="container" style="border:1px solid #ccc">
+  <div class="container">
   <%if(flag){%>
-     <h1>Notice 게시판 글 삭제가 완료되었습니다. 감사합니다.</h1>
+     <h2>Notice 게시판 글 삭제가 완료되었습니다. 감사합니다.</h2>
      <%}else{%>
-     <h1>Notice 게시판 글 삭제가 실패하였습니다. 다시 한번 시도해주세요.</h1>
+     <h2>Notice 게시판 글 삭제가 실패하였습니다. 다시 한번 시도해주세요.</h2>
   	 <%} %>
    
     <hr>
     
  
-    <div class="clearfix">
-      <button type="button" class="loginbtn" onclick="location.href='loginForm.jsp'">Login</button>
-      <button type="button" class="homebtn" onclick="nlist()">notice list</button>
+   <div>
+  <%if(flag==false){ %>
+  	<button type="button" id="againbtn" onclick="history.back()">다시시도</button>
+  	<%} %>
+      <button type="button" id="homebtn" onclick="nlist()" style="float:right">공지 목록</button>
     </div>
   </div>
 

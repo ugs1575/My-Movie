@@ -35,7 +35,7 @@ System.out.println("review 글 삭제 결과 : " +flag);
 <header class="w3-display-container w3-content w3-wide" style="max-width:1500px;" id="home">
   <img class="w3-image" src="../movie/img/movielist_header.jpg" alt="Architecture" width="1500px" height="100px">
   <div class="w3-display-middle w3-margin-top w3-center">
-    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>Sign-up</b></span><br> <span class="w3-hide-small w3-text-light-grey">Introduction & brief story of Movie</span></h1>
+    <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>영화 리뷰</b></span><br> </h1>
   </div>
 </header>
 
@@ -46,34 +46,28 @@ System.out.println("review 글 삭제 결과 : " +flag);
   
 <!--   Sign-up Section -->
 <style>
-body {font-family: Arial, Helvetica, sans-serif;}
-* {box-sizing: border-box}
 
-
-/* Set a style for all buttons */
-button {
-    background-color: #000000;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-}
-
-button:hover {
-    opacity:1;
-}
-
-/
 /* Add padding to container elements */
 .container {
     padding: 16px;
+    margin: auto;
+	width: 50%;
+	margin-bottom: 8%;
+    
 }
 
+input[type=button] {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+    border: 1px solid black;
+}
 
-
+input[type=button]:hover{
+	opacity: 0.8;
+}
 </style>
 <script type="text/javascript">
 function rlist(){
@@ -86,31 +80,31 @@ function rlist(){
 </script>	
 <body>
 
-  <div class="content">
+<div class="container">
 <%
-	if(pflag==false){
-		out.print("패스워드 불일지");
-	} else if(flag){
-		out.print("글을 삭제했습니다.");
-	} else{
-		out.print("글삭제를 실패했습니다.");
-	}
+	if(pflag==false){%>
+		<h1>패스워드 불일치!</h1>
+<%	} else if(flag){%>
+		<h1>글을 삭제했습니다.</h1>
+<%	} else{%>
+		<h1>글삭제를 실패했습니다.</h1>
+<%	}
 
 %>
+  <hr>
 
-</div>
 <% if(pflag==false || flag==false){ %>
-  <DIV class='bottom'>
+  <DIV>
     <input type='button' value='다시시도' onclick="history.back()">
-    <input type='button' value='목록' onclick="rlist()">
+    <input type='button' value='목록' onclick="rlist()" style="float:right">
   </DIV>
 <%}else{ %>
-<DIV class='bottom'>
-    <input type='button' value='목록' onclick="rlist()">
+<DIV>
+    <input type='button' value='목록' onclick="rlist()" style="float:right">
 </DIV>
 <%} %>
     
- 
+ </div>
     
 
 </body>
